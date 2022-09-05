@@ -1,7 +1,6 @@
-# Песенка Twelve Days
+# Пісенька Twelve Days
 
-Текст песенки 'The Twelve Days of Christmas'.
-
+Текст пісеньки 'The Twelve Days of Christmas'.
 ```text
 On the first day of Christmas my true love gave to me, a Partridge in a Pear Tree.
 
@@ -27,11 +26,10 @@ On the eleventh day of Christmas my true love gave to me, eleven Pipers Piping, 
 
 On the twelfth day of Christmas my true love gave to me, twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree.
 ```
+У пісеньці багато що повторюється і в цьому сенс. Необхідно зрозуміти принцип і написати генератор тексту пісеньки, рунтуючись на базових фразах.
 
-В песенке многое повторяется и в этом смысл. Необходимо понять принцип и написать генератор текста песенки основываясь на базовых фразах.
-
-## Запуск тестов
-Чтобы запустить тесты  просто выполние комманду `go test` в папке с упражнением или открыв файл с тестами в редакторе (VS Code) и нажав кнопку ***Run Tests / Запустить тесты***
+## Запуск тестів
+Щоб запустити тести, просто виконайте команду `go test` у папці з вправою або відкривши файл з тестами в редакторі (VS Code) і натиснувши кнопку ***Run Tests / Запустити тести***
 
 ## Source
 
