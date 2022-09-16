@@ -1,20 +1,20 @@
-# Неделя 4
+# Тиждень 4
 
->Для апишечек должны быть тесты   
+>Для апішечок повинні бути тести
 >/lectures/week_4/02_json_api/main_test.go
 
-## Задания
+## Завдання
 
-К выполнению 2 задания
+До виконання 2 завдання
 
 1. Echo
-2. Города
+2. Міста
 
-### 1. Эхо
+### 1. Відлуння
 
-Необходимо сделать эхо-сервер, который принимает любой http запрос и в ответ возваращает по прообразу http://httpbin.org
+Необхідно зробити луна-сервер, який приймає будь-який http запит і у відповідь повертає за прообразом http://httpbin.org
 
-Список:
+Перелік:
 
 - http://httpbin.org/ip Returns Origin IP.
 - http://httpbin.org/user-agent Returns user-agent.
@@ -27,19 +27,19 @@
 - http://httpbin.org/response-headers?key=val Returns given response headers.
 - http://httpbin.org/cookies Returns cookie data.
 - http://httpbin.org/cookies/set/:name/:value Sets a simple cookie.
-- http://httpbin.org/stream/:n Streams n–100 lines.
-- http://httpbin.org/delay/:n Delays responding for n–10 seconds
+- http://httpbin.org/stream/:n Streams n-100 lines.
+- http://httpbin.org/delay/:n Delays responding for n10 seconds
 
-### 2. Города
+### 2. Міста
 
-За основу взять предыдущее решение городов. Реализовать веб-сервер
+За основу взяти попереднє рішення міст. Реалізувати веб-сервер
 
-1) /init - начинает игру, возвращает 1й город 
-2) /get-answer/{city_name} - получаете вариант ответа
-3) /submit - отправляете город, получаете новый
-4) возвращаетесь к пункту 2 
+1) /init - починає гру, повертає 1-е місто
+2) /get-answer/{city_name} - отримуєте варіант відповіді
+3) /submit - відправляєте місто, отримуєте нове
+4) повертаєтеся до пункту 2
 
 
 ## Cookie
-- https://ru.wikipedia.org/wiki/Cookie
+- https://ua.wikipedia.org/wiki/Cookie
 - https://astaxie.gitbooks.io/build-web-application-with-golang/en/06.1.html
