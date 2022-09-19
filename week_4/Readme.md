@@ -1,7 +1,7 @@
 # Тиждень 4
 
 >Для апішечок повинні бути тести
->/lectures/week_4/02_json_api/main_test.go
+> /lectures/week_4/02_json_api/main_test.go
 
 ## Завдання
 
