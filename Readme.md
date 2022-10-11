@@ -31,8 +31,8 @@ git remote add origin https://github.com/**_Ваше ім'я_**/course
 git remote -v
 #base https://github.com/yevhenii-babich/go-lessons.git (fetch)
 #base https://github.com/yevhenii-babich/go-lessons.git (push)
-#origin https://github.com//gl-go-cources/student-**_свій номер_**.git (fetch)
-#origin https://github.com//gl-go-cources/student-**_свій номер_**.git (push)
+#origin https://github.com/gl-go-cources/course.git (fetch)
+#origin https://github.com/gl-go-cources/course.git (push)
 
 git push -u origin main
 
