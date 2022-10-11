@@ -2,14 +2,14 @@
 
 > Назви гілок відповідають номеру тижня курсу. week_1, week_2 і так далі
 ## Початкова підготовка
-0. Налаштовуєте git (*опціонально, якщо не налаштовано*)
+1. Налаштовуєте git (*опціонально, якщо не налаштовано*)
 ```sh
 git config --global user.name "Your Name"
 git config --global user.email "your.email@gmail.com"
 git config --global user.password "YOUR PASSWORD"
 ````
-1. Відправляєте на емейл yevhenii.babich@globallogic.com ваш нікнейм та емейл у github.   
-2. Отримуєте **_свій номер_** та репозитарій для вирішення завдань. 
+2. Відправляєте на емейл yevhenii.babich@globallogic.com ваш нікнейм та емейл у github.   
+
 
 ## Git
 1. Клонуєте базовий репозиторій себе;
