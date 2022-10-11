@@ -13,6 +13,7 @@ git config --global user.password "YOUR PASSWORD"
 
 ## Git
 1. Клонуєте базовий репозиторій себе;
+2. Створюєте свій репозитарій
 2. Змінюєте ім'я remote;
 3. Додаєте свій репозиторій як remote;
 4. Відправляєте гілку майстер у свій репозиторій;
@@ -24,8 +25,8 @@ git clone https://github.com/yevhenii-babich/go-lessons.git course
 cd course
 git remote rename origin base
 
-# **_свій номер_** - слід замінити
-git remote add origin https://github.com//gl-go-cources/student-**_свій номер_**.git
+# **_Ваше ім'я_** - слід замінити
+git remote add origin https://github.com/**_Ваше ім'я_**/course
 
 git remote -v
 #base https://github.com/yevhenii-babich/go-lessons.git (fetch)
@@ -43,14 +44,14 @@ git clone git@github.com:yevhenii-babich/go-lessons.git course
 cd course
 git remote rename origin base
 
-# **_свій номер_** - слід замінити
-git remote add origin  git@github.com:gl-go-cources/student-**_свій номер_**.git
+# **_Ваше ім'я_** - слід замінити
+git remote add origin  git@github.com:**_Ваше ім'я_**/course.git
 
 git remote -v
 #base    https://github.com/yevhenii-babich/go-lessons.git (fetch)
 #base    https://github.com/yevhenii-babich/go-lessons.git (push)
-#origin  git@github.com:gl-go-cources/student-1.git (fetch)
-#origin  git@github.com:gl-go-cources/student-1.git (push)
+#origin  git@github.com:vasya/course.git (fetch)
+#origin  git@github.com:vasya/course.git (push)
 git push -u origin main
 
 git checkout -b week_1
