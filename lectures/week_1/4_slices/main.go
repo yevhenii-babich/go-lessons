@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"net/http"
+)
 
 func main() {
 	var sl []int
@@ -55,13 +59,13 @@ func main() {
 	fmt.Println(slice4, slice5)
 	// [0 100500 0 0 0 0 0 0 0 0 1 2 3 4 5 6] [0 100500 0 0 0 0 0 0 0 0 1 2 3 4 5 6]
 
-	//неправильная попытка скопировать слайс - он оппробует скопировать сколько влезет
+	// неправильная попытка скопировать слайс - он оппробует скопировать сколько влезет
 	var slice6 []int
 	copy(slice6, slice5)
 	fmt.Println(slice6)
 	// []
 
-	//правильное копирование слайса
+	// правильное копирование слайса
 	slice7 := make([]int, len(slice5), len(slice5))
 	copy(slice7, slice5)
 	fmt.Println(slice7)
@@ -75,9 +79,21 @@ func main() {
 	// из кусков слайса [0 100500 1 2 3 4 5 6]
 
 	a := [...]int{5, 6, 7}
+	fmt.Println("массив", a)
 	sl8 := a[:]
+	fmt.Println("слайс", sl8)
 	a[1] = 8
 	fmt.Println("слайс из массива", sl8)
 	// слайс из массива [5 8 7]
-
+	sl8 = append(sl8, sl8...)
+	a[1] = 6
+	fmt.Println("слайс из массива", a, sl8)
+	println("слайс из массива", sl8)
+	var m error
+	if errors.Is(m, http.ErrAbortHandler) {
+		fmt.Println("This is http error")
+	}
+	for _, v := range sl8 {
+		print(v)
+	}
 }

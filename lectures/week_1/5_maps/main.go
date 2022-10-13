@@ -21,15 +21,15 @@ func main() {
 
 	// Отримання значення
 	firstName := mm3["firstName"]
-	fmt.Println("firstName", firstName, len(firstName))
+	fmt.Printf("firstName [%s], len: %d\n", firstName, len(firstName))
 
 	// є звернутися до відсутнього ключа = значення за замовчуванням
 	lastName := mm3["lastName"]
-	fmt.Println("lastName", lastName, len(lastName))
+	fmt.Printf("lastName [%s], len: %d\n", lastName, len(lastName))
 
 	// Перевірка те що, що значення є
 	lastName, ok := mm3["lastName"]
-	fmt.Println("lastName is", lastName, "exist:", ok)
+	fmt.Println("lastName is:", lastName, ", exist:", ok)
 
 	// Тільки отримання ознаки існування
 	_, exist := mm3["firstName"]

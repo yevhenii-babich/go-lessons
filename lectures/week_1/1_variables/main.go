@@ -29,7 +29,7 @@ func main() {
 	// Бінарні дані
 	var rawBinary byte = '\x27'
 	println("rawBinary", rawBinary)
-
+	println([]byte(world))
 	// так не можна
 	// var singleQuote string = 'Hello world'
 	// missing '

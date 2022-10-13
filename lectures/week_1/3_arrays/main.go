@@ -31,10 +31,11 @@ func main() {
 
 	var matrix [3][3]int
 	matrix[1][1] = 1
+	matrix[0][0] = 1
 	fmt.Println("Массив массивов:", matrix)
 	// Масив масивів: [[0 0 0] [0 1 0] [0 0 0]]
 	var xUnknown []int
 	fmt.Printf("xUnknown: %v, len(%d), is nil: %v\n", xUnknown, len(xUnknown), xUnknown == nil)
-	xUnknown = make([]int, 0)
-	fmt.Printf("xUnknown: %v, len(%d), is nil: %v\n", xUnknown, len(xUnknown), xUnknown == nil)
+	xUnknown = make([]int, 0, 10)
+	fmt.Printf("xUnknown: %v, len(%d), is nil: %v\n, cap: %d", xUnknown, len(xUnknown), xUnknown == nil, cap(xUnknown))
 }
