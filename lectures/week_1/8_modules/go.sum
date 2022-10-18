@@ -1,2 +1,6 @@
 github.com/agolubkov/course v0.0.1 h1:VETyyYC7mG63HC7220JqVd1lLyuwYw1COm6hLgoLjhc=
 github.com/agolubkov/course v0.0.1/go.mod h1:OUCnXNH9WiGbAR/g4qRF7z04kLkNstK933eFU9EehnQ=
+github.com/agolubkov/course v0.0.2 h1:yH28pebwXXL8p5a/rjs5gRG3YpSTayaFWO+wZN9+Elc=
+github.com/agolubkov/course v0.0.2/go.mod h1:y3sooI/wtmCJ6z0QDSi0zSvj/D3bxSpmy2V81Q4SasE=
+github.com/agolubkov/course v0.0.3 h1:HkgJkj0NCNjQHvwh+ifMV1QLLvWseCgSU+ZfbF8YREA=
+github.com/agolubkov/course v0.0.3/go.mod h1:y3sooI/wtmCJ6z0QDSi0zSvj/D3bxSpmy2V81Q4SasE=
