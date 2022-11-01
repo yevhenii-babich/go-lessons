@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type linkedNode[T any] struct {
 	value T
 	next  *linkedNode[T]
@@ -9,6 +11,10 @@ type linkedNode[T any] struct {
 type linkedList[T any] struct {
 	first *linkedNode[T]
 	last  *linkedNode[T]
+}
+
+func newLinkedList[T any](in T) *linkedList[T] {
+	return &linkedList[T]{first: &linkedNode[T]{value: in}}
 }
 
 func (ll *linkedList[T]) Add(v T) {
@@ -71,4 +77,6 @@ func main() {
 	x.Each(func(in string) {
 		println(in)
 	})
+	out := newLinkedList("1")
+	fmt.Printf("%T, %+v", *out, *out)
 }

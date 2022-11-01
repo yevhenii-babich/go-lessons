@@ -52,6 +52,10 @@ func Scale[E Numbers](s []E, c E) []E {
 func Scale2[S ~[]E, E Numbers](s S, c E) S {
 	r := make(S, len(s))
 	for i, v := range s {
+		if v == E(42) {
+			r[i] = v
+			continue // do not touch holly digit!!! ;))))
+		}
 		r[i] = v * c
 	}
 	return r
@@ -70,6 +74,14 @@ func ScaleAndPrint2(p MySlice, mul MyInt) {
 }
 
 func main() {
-	ScaleAndPrint([]MyInt{1, 2, 3, 4}, 2)
+	var m MyInt = 2
+	var sl MySlice
+	ScaleAndPrint(MySlice{1, 2, 3, 4}, m)
 	ScaleAndPrint2([]MyInt{1, 2, 3, 4}, 2)
+	sl = make(MySlice, 0, 20)
+	for i := 23; i <= 42; i++ { // 42 = answer for questions about "everything"
+		sl = append(sl, MyInt(i))
+	}
+	fmt.Println(sl)
+	ScaleAndPrint2(sl, m)
 }
