@@ -11,14 +11,19 @@ type (
 	Unsigned interface {
 		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr
 	}
-	Integer interface {
-		Signed | Unsigned
-	}
 	Float interface {
 		~float32 | ~float64
 	}
+	// --------------------------------------------------------------
+
+	Integer interface {
+		Signed | Unsigned
+	}
 	Numbers interface {
 		Integer | Float
+	}
+	SomeInt interface {
+		MyInt | Float | Integer
 	}
 )
 
@@ -48,6 +53,14 @@ func Scale[E Numbers](s []E, c E) []E {
 	return r
 }
 
+func MakeMySlice[S ~[]T, T any](in ...T) S {
+	r := make(S, len(in))
+	for idx, v := range in {
+		r[idx] = v
+	}
+	return r
+}
+
 // Scale2  returns a copy of s with each element multiplied by c.
 func Scale2[S ~[]E, E Numbers](s S, c E) S {
 	r := make(S, len(s))
@@ -69,13 +82,15 @@ func ScaleAndPrint(p MySlice, mul MyInt) {
 
 func ScaleAndPrint2(p MySlice, mul MyInt) {
 	r := Scale2(p, mul)
-	fmt.Println(r.String())
+	// fmt.Println(r.String())
 	fmt.Println(r)
 }
 
 func main() {
 	var m MyInt = 2
 	var sl MySlice
+	_ = m.String()
+	m += 2
 	ScaleAndPrint(MySlice{1, 2, 3, 4}, m)
 	ScaleAndPrint2([]MyInt{1, 2, 3, 4}, 2)
 	sl = make(MySlice, 0, 20)
@@ -84,4 +99,7 @@ func main() {
 	}
 	fmt.Println(sl)
 	ScaleAndPrint2(sl, m)
+	sl2 := MakeMySlice[MySlice, MyInt](1, 2, 3, 4, 5, 6, 7, 7)
+	sl3 := MakeMySlice[[]string, string]("1--", "--2", "++3", "4", "5", "6", "7, 7")
+	fmt.Println(sl2, sl3)
 }

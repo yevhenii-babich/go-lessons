@@ -4,23 +4,31 @@ package main
 import (
 	"fmt"
 	"log"
+	"sync"
 )
 
 // Нехай у нас є Рахунок
 type Account struct {
 	balance float64
+	mu      sync.RWMutex
 }
 
 func (a *Account) Balance() float64 {
+	a.mu.RLock()
+	defer a.mu.RUnlock()
 	return a.balance
 }
 
 func (a *Account) Deposit(amount float64) {
-	log.Printf("depositing: %f (%f)", amount, a.balance)
+	log.Printf("depositing: %f (%f)", amount, a.Balance())
+	a.mu.Lock()
+	defer a.mu.Unlock()
 	a.balance += amount
 }
 
 func (a *Account) Withdraw(amount float64) {
+	a.mu.Lock()
+	defer a.mu.Unlock()
 	if amount > a.balance {
 		log.Printf("not enouth : %f", a.balance)
 		return
