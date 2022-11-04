@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"sync"
+	"time"
 )
 
 // Нехай у нас є Рахунок
@@ -39,22 +40,24 @@ func (a *Account) Withdraw(amount float64) {
 
 func main() {
 	acc := Account{}
-
 	// Стартуємо 10 go-lessons рутин
 	for i := 0; i < 10; i++ {
-		go func() {
+		go func(acc *Account, no int) {
+			start := time.Now()
 			// Кожна з яких проводить операції з акаунтом
 			for j := 0; j < 10; j++ {
 				// Іноді знімає гроші
-				if j%2 == 1 {
+				if j%2 == 0 {
 					acc.Withdraw(50)
 					continue
 				}
 				// іноді кладе
 				acc.Deposit(50)
 			}
-		}()
+			log.Printf("# %d completed in %v", no, time.Since(start))
+		}(&acc, i)
 	}
+
 	_, _ = fmt.Scanln()
 	// Що ж вийде в результаті
 	fmt.Printf("balance: %f", acc.Balance())
