@@ -9,6 +9,8 @@ import (
 // Нехай у нас є Рахунок
 type Account struct {
 	balance float64
+	debit   float64
+	credit  float64
 	changes chan float64
 }
 
@@ -24,6 +26,12 @@ func (a *Account) BankWorker() {
 			continue
 		}
 		a.balance += changes
+		switch {
+		case changes > 0:
+			a.debit += changes
+		case changes < 0:
+			a.credit -= changes
+		}
 	}
 	log.Println("bank closed")
 }
@@ -38,8 +46,8 @@ func (a *Account) Withdraw(amount float64) {
 	a.changes <- -amount
 }
 
-func (a *Account) Balance() float64 {
-	return a.balance
+func (a *Account) Balance() string {
+	return fmt.Sprintf("balance: %0.2f, debit: %0.2f, credit: %0.2f", a.balance, a.debit, a.credit)
 }
 
 func (a *Account) Done() {
@@ -56,7 +64,7 @@ func main() {
 			// Кожна з яких проводить операції з акаунтом
 			for j := 0; j < 10; j++ {
 				// Іноді знімає гроші
-				if j%2 == 0 {
+				if j%3 == 0 {
 					acc.Withdraw(50)
 					continue
 				}
@@ -69,5 +77,5 @@ func main() {
 	_, _ = fmt.Scanln()
 	acc.Done()
 	// Що ж вийде в результаті
-	fmt.Printf("balance: %f\n", acc.Balance())
+	fmt.Println(acc.Balance())
 }

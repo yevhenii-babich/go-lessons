@@ -8,6 +8,7 @@ import (
 	_ "github.com/agolubkov/course/week_1/leap"
 	"github.com/agolubkov/course/week_1/sublist"
 	td "github.com/agolubkov/course/week_1/twelve-days"
+	"github.com/jessfraz/netscan/pkg/scanner"
 	"modulestest/internal/packages/listeq"
 	"modulestest/leap"
 	"rsc.io/quote"
@@ -21,4 +22,5 @@ func main() {
 	fmt.Println(sublist.Sublist([]int{1}, []int{1}) == sublist.RelationEqual)
 	fmt.Println(listeq.IsEqual([]int{1}, []int{2}))
 	fmt.Println(quote.Hello())
+	scanner.NewScanner()
 }
