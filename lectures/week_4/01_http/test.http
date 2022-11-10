@@ -1,0 +1,34 @@
+POST http://localhost:8081/gopherize
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Yevhenii"
+}
+###
+
+GET http://localhost:8081/greeting/new?name=Yevhenii
+Accept: text/plain
+###
+
+GET http://localhost:8081/greeting/Yevhenii
+Accept: text/plain
+###
+
+GET http://localhost:8081/?A
+###
+
+GET http://localhost:8081/gopherize
+###
+
+OPTIONS http://localhost:8081/gopherize
+###
+
+POST http://localhost:8081/gopherize
+Content-Type: text/plain
+Accept: application/json
+
+  "name": "Yevhenii"
+###
+GET http://localhost:8080/
+###

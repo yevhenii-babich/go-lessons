@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"sync"
+	"time"
 )
 
 // Task - опис інтрефейсу роботи
@@ -17,11 +18,12 @@ type Task interface {
 // Канал скасування, для завершення роботи
 // WaitGroup для контролю завершення робіт
 type Pool struct {
-	mu    sync.Mutex
-	size  int
-	tasks chan Task
-	kill  chan struct{}
-	wg    sync.WaitGroup
+	mu     sync.Mutex
+	taskNo int
+	size   int
+	tasks  chan Task
+	kill   chan struct{}
+	wg     sync.WaitGroup
 }
 
 // Прихуємо внутрішній пристрій за конструктором, користувач може впливати тільки на розмір пула
@@ -64,9 +66,10 @@ func (p *Pool) Resize(n int) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 	for p.size < n {
+		p.taskNo++
 		p.size++
 		p.wg.Add(1)
-		go p.worker(p.size)
+		go p.worker(p.taskNo)
 	}
 	for p.size > n {
 		p.size--
@@ -90,6 +93,8 @@ type ExampleTask string
 
 func (e ExampleTask) Execute() {
 	fmt.Println("executing:", string(e))
+	time.Sleep(500 * time.Millisecond)
+	fmt.Println("finishing:", string(e))
 }
 
 func main() {
