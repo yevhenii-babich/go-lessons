@@ -1,0 +1,35 @@
+GET localhost:8081/ping
+
+###
+
+
+GET localhost:8081/panic
+
+###
+GET localhost:8081/users
+###
+POST localhost:8081/articles
+Content-Type: application/json
+
+{
+  "user_id": 400,
+  "title": "sup",
+  "slug": "sup",
+  "elapsed": 10
+}
+
+###
+GET http://localhost:8081/articles/69
+###
+PUT http://localhost:8081/articles/91
+Content-Type: application/json
+
+{
+  "user_id": 200
+}
+###
+DELETE http://localhost:8081/articles/91
+###
+GET http://localhost:8081/admin
+#Authorization: my magic key
+###
