@@ -5,7 +5,6 @@ import (
 	"strconv"
 
 	"echo-sample/db"
-
 	"echo-sample/model"
 	"github.com/Sirupsen/logrus"
 	"github.com/labstack/echo/v4"
@@ -14,7 +13,9 @@ import (
 func PostMember() echo.HandlerFunc {
 	return func(c echo.Context) (err error) {
 		m := new(model.Member)
-		c.Bind(&m)
+		if err := c.Bind(&m); err != nil {
+			return echo.NewHTTPError(http.StatusBadRequest, err)
+		}
 
 		tx := c.Get("Tx").(*db.JsonDB[model.Member])
 
@@ -24,6 +25,7 @@ func PostMember() echo.HandlerFunc {
 			logrus.Debug(err)
 			return echo.NewHTTPError(http.StatusInternalServerError)
 		}
+
 		return c.JSON(http.StatusCreated, member)
 	}
 }

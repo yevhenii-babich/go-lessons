@@ -9,10 +9,15 @@ GET http://localhost:8081/api/v1/members
 Accept: application/json
 ###
 
+GET http://localhost:8081/admin/members
+Accept: application/json
+###
+
 POST http://localhost:8081/api/v1/members
 Content-Type: application/json
 
 {
+  "number": 30,
   "name": "Vasya M",
   "position": "junior GO"
 }
