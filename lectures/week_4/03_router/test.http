@@ -1,3 +1,6 @@
+GET localhost:8081/
+
+###
 GET localhost:8081/ping
 
 ###
@@ -6,13 +9,18 @@ GET localhost:8081/ping
 GET localhost:8081/panic
 
 ###
-GET localhost:8081/users
+GET localhost:8081/articles
+###
+
+GET localhost:8081/articles/search/abv
+###
+GET localhost:8081/articles/97
 ###
 POST localhost:8081/articles
 Content-Type: application/json
 
 {
-  "user_id": 400,
+  "user_id": 200,
   "title": "sup",
   "slug": "sup",
   "elapsed": 10
@@ -28,7 +36,7 @@ Content-Type: application/json
   "user_id": 200
 }
 ###
-DELETE http://localhost:8081/articles/91
+DELETE http://localhost:8081/articles/97
 ###
 GET http://localhost:8081/admin
 #Authorization: my magic key

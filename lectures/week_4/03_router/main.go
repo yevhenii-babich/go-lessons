@@ -80,8 +80,8 @@ func main() {
 	// RESTy routes for "articles" resource
 	r.Route("/articles", func(r chi.Router) {
 		r.With(paginate).Get("/", ListArticles)
-		r.Post("/", CreateArticle)       // POST /articles
-		r.Get("/search", SearchArticles) // GET /articles/search
+		r.Post("/", CreateArticle)              // POST /articles
+		r.Get("/search/{name}", SearchArticles) // GET /articles/search
 
 		r.Route("/{articleID}", func(r chi.Router) {
 			r.Use(ArticleCtx)            // Load the *Article on the request context
@@ -96,7 +96,7 @@ func main() {
 
 	// Mount the admin sub-router, which btw is the same as:
 	// r.Route("/admin", func(r chi.Router) { admin routes here })
-	r.Mount("/admin", adminRouter())
+	r.Mount("/admin/routes", adminRouter())
 
 	// Passing -routes to the program will generate docs for the above
 	// router definition. See the `routes.json` file in this folder for
@@ -133,12 +133,12 @@ func ArticleCtx(next http.Handler) http.Handler {
 		} else if articleSlug := chi.URLParam(r, "articleSlug"); articleSlug != "" {
 			article, err = dbGetArticleBySlug(articleSlug)
 		} else {
-			render.Render(w, r, ErrNotFound)
+			_ = render.Render(w, r, ErrNotFound)
 			return
 		}
 
 		if err != nil {
-			render.Render(w, r, ErrNotFound)
+			_ = render.Render(w, r, ErrNotFound)
 			return
 		}
 
@@ -150,6 +150,8 @@ func ArticleCtx(next http.Handler) http.Handler {
 // SearchArticles searches the Articles data for a matching article.
 // It's just a stub, but you get the idea.
 func SearchArticles(w http.ResponseWriter, r *http.Request) {
+	searchName := chi.URLParam(r, "name")
+	log.Printf("searching %s", searchName)
 	_ = render.RenderList(w, r, NewArticleListResponse(articles))
 }
 
@@ -181,8 +183,12 @@ func GetArticle(w http.ResponseWriter, r *http.Request) {
 	// Assume if we've reach this far, we can access the article
 	// context because this handler is a child of the ArticleCtx
 	// middleware. The worst case, the recoverer middleware will save us.
-	article := r.Context().Value("article").(*Article)
-
+	article, ok := r.Context().Value("article").(*Article)
+	if !ok {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"code":500,"message":"Internal server error"`))
+		return
+	}
 	if err := render.Render(w, r, NewArticleResponse(article)); err != nil {
 		_ = render.Render(w, r, ErrRender(err))
 		return
@@ -256,6 +262,7 @@ func paginate(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// just a stub.. some ideas are to look at URL query params for something like
 		// the page number, or the limit, and send a query cursor down the chain
+		log.Printf("paginate: %s\n", r.RequestURI)
 		next.ServeHTTP(w, r)
 	})
 }
@@ -366,9 +373,9 @@ func NewArticleResponse(article *Article) *ArticleResponse {
 	return resp
 }
 
-func (rd *ArticleResponse) Render(w http.ResponseWriter, r *http.Request) error {
+func (rd *ArticleResponse) Render(_ http.ResponseWriter, _ *http.Request) error {
 	// Pre-processing before a response is marshalled and sent across the wire
-	rd.Elapsed = 10
+	rd.Elapsed = 1
 	return nil
 }
 

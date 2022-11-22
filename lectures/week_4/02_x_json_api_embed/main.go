@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	_ "embed"
 	"encoding/json"
 	"flag"
@@ -23,8 +24,13 @@ var (
 	firstToDo   = flag.String("first", "Learn Go", "just init TODO list with first phase")
 )
 
+/*
 //go:embed index.html
 var fileContents []byte
+*/
+
+//go:embed files
+var fldr embed.FS
 
 var todos = []Todo{
 	{*firstToDo, false},
@@ -32,11 +38,14 @@ var todos = []Todo{
 
 func main() {
 	flag.Parse()
+	todos[0].Name = *firstToDo
 	http.HandleFunc("/", serveHtml)
 
 	http.HandleFunc("/todos/", restAPI)
 	log.Printf("serve at http://%s:%d", *bindAddress, *port)
-	_ = http.ListenAndServe(fmt.Sprintf("%s:%d", *bindAddress, *port), nil)
+	if err := http.ListenAndServe(fmt.Sprintf("%s:%d", *bindAddress, *port), nil); err != nil {
+		log.Fatalf("can't start: %v", err)
+	}
 }
 
 func serveHtml(w http.ResponseWriter, r *http.Request) {
@@ -45,6 +54,10 @@ func serveHtml(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Add("Content-Type", "text/html")
+	fileContents, err := fldr.ReadFile("files/index.html")
+	if err != nil {
+		log.Printf("can't read: %v", err)
+	}
 	_, _ = w.Write(fileContents)
 }
 
