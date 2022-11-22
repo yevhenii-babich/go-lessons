@@ -14,7 +14,8 @@ func PostMember() echo.HandlerFunc {
 	return func(c echo.Context) (err error) {
 		m := new(model.Member)
 		if err := c.Bind(&m); err != nil {
-			return echo.NewHTTPError(http.StatusBadRequest, err)
+			c.Logger().Errorf("can't bind: %v", err)
+			return err
 		}
 
 		tx := c.Get("Tx").(*db.JsonDB[model.Member])
@@ -22,7 +23,7 @@ func PostMember() echo.HandlerFunc {
 		member := model.NewMember(m.Number, m.Name, m.Position)
 
 		if err := member.Save(tx); err != nil {
-			logrus.Debug(err)
+			c.Logger().Errorf("can't save: %v", err)
 			return echo.NewHTTPError(http.StatusInternalServerError)
 		}
 
@@ -52,7 +53,7 @@ func GetMembers() echo.HandlerFunc {
 		position := c.QueryParam("position")
 		members := new(model.Members)
 		if err = members.Load(tx, position); err != nil {
-			logrus.Debug(err)
+			c.Logger().Errorf("unable to get data: %v", err)
 			return echo.NewHTTPError(http.StatusNotFound, "Member does not exists.")
 		}
 

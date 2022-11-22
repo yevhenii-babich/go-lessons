@@ -8,10 +8,12 @@ import (
 	"echo-sample/model"
 	echo "github.com/labstack/echo/v4"
 	echoMw "github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/gommon/log"
 )
 
 func Init() *echo.Echo {
 	e := echo.New()
+	e.Logger.SetLevel(log.DEBUG)
 
 	e.Debug = true
 

@@ -1,0 +1,15 @@
+{
+  "time": "2022-11-22T20:13:05.8758313+02:00",
+  "id": "",
+  "remote_ip": "127.0.0.1",
+  "host": "localhost:8081",
+  "method": "GET",
+  "uri": "/api/v1/members/6",
+  "user_agent": "Apache-HttpClient/4.5.13 (Java/17.0.4.1)",
+  "status": 404,
+  "error": "code=404, message=Member does not exists.",
+  "latency": 1835800,
+  "latency_human": "1.8358ms",
+  "bytes_in": 0,
+  "bytes_out": 64
+}
