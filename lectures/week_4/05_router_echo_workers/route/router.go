@@ -1,11 +1,11 @@
 package route
 
 import (
-	api2 "echo-sample/internal/api"
-	"echo-sample/internal/db"
-	"echo-sample/internal/handler"
-	"echo-sample/internal/model"
+	"echo-sample/api"
+	"echo-sample/db"
+	"echo-sample/handler"
 	myMw "echo-sample/middleware"
+	"echo-sample/model"
 	echo "github.com/labstack/echo/v4"
 	echoMw "github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
@@ -28,22 +28,18 @@ func Init() *echo.Echo {
 	// Set Custom MiddleWare
 	e.Use(myMw.TransactionHandler(db.NewJsonDB[model.Member]("database.json")))
 	e.HTTPErrorHandler = handler.JSONHTTPErrorHandler
-	e.GET("/", api2.GetMembers())
+	e.GET("/", api.GetMembers())
 	// Routes
 	v1 := e.Group("/api/v1")
-	v1.POST("/members", api2.PostMember())
-	v1.GET("/members", api2.GetMembers())
-	v1.GET("/members/:id", api2.GetMember())
+	v1.POST("/members", api.PostMember())
+	v1.GET("/members", api.GetMembers())
+	v1.GET("/members/:id", api.GetMember())
 	// HOMEWORK: Make this:
-	v1.DELETE("/members/:id", api2.DeleteMember())
+	// v1.DELETE("/members/:id", api.DeleteMember())
 
 	v2 := e.Group("/admin")
 	// admin group with auth check
 	v2.Use(myMw.AlwaysUnauthorized())
-	v2.GET("/members", api2.GetMembers())
+	v2.GET("/members", api.GetMembers())
 	return e
-}
-
-func toPtr[T any](in T) *T {
-	return &in
 }

@@ -5,7 +5,7 @@ GET http://localhost:8081/api/v1/members/11111
 Accept: application/json
 ###
 
-GET http://localhost:8081/api/v1/members?order=desc
+GET http://localhost:8081/api/v1/members
 Accept: application/json
 ###
 
@@ -17,9 +17,7 @@ POST http://localhost:8081/api/v1/members
 Content-Type: application/json
 
 {
+  "number": 30,
   "name": "Vasya M",
   "position": "junior GO"
 }
-###
-DELETE http://localhost:8081/api/v1/members/3
-###

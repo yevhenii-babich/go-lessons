@@ -4,8 +4,8 @@ import (
 	"errors"
 	"net/http"
 
-	"echo-sample/internal/db"
-	"echo-sample/internal/model"
+	"echo-sample/db"
+	"echo-sample/model"
 
 	"github.com/labstack/echo/v4"
 )
