@@ -4,8 +4,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"echo-sample/db"
-	"echo-sample/model"
+	"echo-with-workers/internal/db"
+	"echo-with-workers/internal/model"
+
 	"github.com/Sirupsen/logrus"
 	"github.com/labstack/echo/v4"
 )
@@ -50,13 +51,12 @@ func GetMembers() echo.HandlerFunc {
 	return func(c echo.Context) (err error) {
 		tx := c.Get("Tx").(*db.JsonDB[model.Member])
 
-		position := c.QueryParam("position")
+		order := c.QueryParam("order")
 		members := new(model.Members)
-		if err = members.Load(tx, position); err != nil {
+		if err = members.Load(tx, order); err != nil {
 			c.Logger().Errorf("unable to get data: %v", err)
 			return echo.NewHTTPError(http.StatusNotFound, "Member does not exists.")
 		}
-
 		return c.JSON(http.StatusOK, members)
 	}
 }

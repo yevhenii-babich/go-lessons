@@ -21,3 +21,23 @@ Content-Type: application/json
   "name": "Vasya M",
   "position": "junior GO"
 }
+###
+POST http://localhost:8081/api/v1/task
+Content-Type: application/json
+
+{
+  "name": "3024-13000",
+  "InParam": 13000,
+  "position": "junior GO"
+}
+###
+
+POST http://localhost:8081/api/v1/tasks/add
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "30",
+  "InParam": 300
+}
+###

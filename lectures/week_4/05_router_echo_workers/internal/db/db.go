@@ -16,6 +16,10 @@ type (
 	}
 )
 
+func (d *JsonDB[T]) Delete(id int64) {
+	delete(d.data, id)
+}
+
 func (d *JsonDB[T]) InsertInto(m *T, id int64, update *int64) error {
 	if id <= d.lastID {
 		id = d.getLastID()

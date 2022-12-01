@@ -1,11 +1,10 @@
 package model
 
 import (
+	"echo-with-workers/internal/db"
 	"encoding/json"
 	"sort"
 	"time"
-
-	"echo-sample/db"
 )
 
 type (
@@ -38,9 +37,16 @@ func (m *Member) Load(tx *db.JsonDB[Member], number int64) error {
 
 type Members []Member
 
-func (m *Members) Load(tx *db.JsonDB[Member], _ string) error {
+func (m *Members) Load(tx *db.JsonDB[Member], order string) error {
 	records := tx.GetAll()
 	sort.Slice(records, func(i, j int) bool {
+		switch order {
+		case "desc":
+			i, j = j, i
+		case "asc":
+		default:
+
+		}
 		return records[i].Number < records[j].Number
 	})
 	*m = records
