@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"encoding/json"
 	"io"
 	"log"
@@ -10,15 +11,6 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-type Joke struct {
-	ID   uint32 `json:"id"`
-	Joke string `json:"joke"`
-}
-
-type JokeResponse struct {
-	Type  string `json:"type"`
-	Value Joke   `json:"value"`
-}
 type JokeChuck struct {
 	Categories []interface{} `json:"categories"`
 	CreatedAt  string        `json:"created_at"`
@@ -53,6 +45,7 @@ func (b *Bus) Run() {
 				w, err := client.NextWriter(websocket.TextMessage)
 				if err != nil {
 					// если достучаться до клиента не удалось, то удаляем его
+					log.Printf("connection error: %v\n", err)
 					delete(b.clients, client)
 					continue
 				}
@@ -106,20 +99,43 @@ func getJoke() []byte {
 	return []byte(joke.Value)
 }
 
+//go:embed index.html
+var htmlData []byte
+
 func main() {
 	bus := NewBus()
 	go bus.Run()
 	go runJoker(bus)
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	socketMux := &http.ServeMux{}
+	socketMux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// апгрейд соединения
 		ws, err := upgrader.Upgrade(w, r, nil)
 		if err != nil {
-			log.Fatal(err)
+			log.Println("upgrader error:", err)
+			return
 		}
 
 		bus.register <- ws
 	})
+	httpMux := &http.ServeMux{}
 
-	http.ListenAndServe(":8081", nil)
+	httpMux.HandleFunc("/client", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "text/html")
+		w.Header().Add("Access-Control-Allow-Origin", "*")
+		w.Header().Add("Keep-Alive", "timeout=32, max=100")
+		w.Header().Add("Connection", "Keep-Alive")
+		w.Header().Add("Origin", "localhost")
+		w.WriteHeader(http.StatusOK)
+		if _, err := w.Write(htmlData); err != nil {
+			log.Println("ERROR:", err)
+		}
+	})
+	go func() {
+		if err := http.ListenAndServe(":8081", socketMux); err != nil {
+			log.Fatal(err)
+		}
+	}()
+	if err := http.ListenAndServe(":8080", httpMux); err != nil {
+		log.Fatal(err)
+	}
 }
